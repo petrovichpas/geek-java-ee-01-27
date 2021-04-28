@@ -1,0 +1,9 @@
+data-source add \
+   --jndi-name=java:/jboss/datasources/MySQLDS \
+   --name=MySQLDS \
+   --connection-url=jdbc:mysql://localhost:3306/java_ee_db?createDatabaseIfNotExist=true \
+   --driver-name=mysql \
+   --user-name=root \
+   --password=0131
+
+:reload
