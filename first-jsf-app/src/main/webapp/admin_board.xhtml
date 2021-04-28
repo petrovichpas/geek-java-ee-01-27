@@ -1,9 +1,10 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta charset="utf-8"/>
@@ -29,17 +30,15 @@
         </nav>
 
 
-        <h:form>
+        <h:form id="adminForm">
             <h:dataTable value="#{hockeyController.hockeyScoreBoard}" var="board" style="text-align: center">
                 <h:column>
                     <h:outputText value="#{board.homeName}" /><br/>
                     <h:outputText id="homeScore" style="font-weight: bold" value="#{board.homeScore}"/>
-                    <h:commandButton value="+" styleClass="btn btn-warning btn-sm" action="#{hockeyController.plusOneHomeScore(board.homeScore)}">
-                        <f:ajax event="click" render="homeScore"/>
-                    </h:commandButton>
-                    <h:commandButton value="-" styleClass="btn btn-warning btn-sm" action="#{hockeyController.minusOneHomeScore(board.homeScore)}">
-                        <f:ajax event="click" render="homeScore"/>
-                    </h:commandButton><br/>
+
+                    <h:commandButton id="hh" value="+" actionListener="#{hockeyController.plusOneHomeScore}"/>
+                    <h:commandButton id="htt" value="-" actionListener="#{hockeyController.plusOneHomeScore}"/>
+                    <br/>
 
                     <h:outputLabel value="Удаления"/><br/>
 
@@ -53,8 +52,7 @@
                     </h:commandButton>
 
                     <h:outputText id="homePenaltySeconds1" style="font-weight: bold" value="#{board.homePenaltySeconds1}"/>
-                    <p:poll interval="1" listener="#{hockeyController.hockeyScoreBoard.getHomePenaltySeconds1}" update="homePenaltySeconds1"/>
-                    <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneHomePenaltySeconds1(board.homePenaltySeconds1, board.homePenaltyNumber1)}">
+                    <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneHomePenaltySeconds1(board.homePenaltySeconds1)}">
                         <f:ajax event="click" render="homePenaltySeconds1"/>
                     </h:commandButton>
                     <h:commandButton value="-" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.minusOneHomePenaltySeconds1(board.homePenaltySeconds1)}">
@@ -76,7 +74,6 @@
                         <f:ajax event="click" render="score1"/>
                     </h:commandButton>
                     <h:outputText id="time" style="font-weight: bold" value="#{hockeyController.hockeyScoreBoard.minutes}:#{hockeyController.hockeyScoreBoard.seconds}"/>
-                    <p:poll interval="1" listener="#{hockeyController.hockeyScoreBoard.getSeconds}" update="time"/>
                     <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneSecond(board.seconds)}">
                         <f:ajax event="click" render="score1"/>
                     </h:commandButton>
@@ -117,7 +114,6 @@
                     </h:commandButton>
 
                     <h:outputText id="awayPenaltySeconds1" style="font-weight: bold" value="#{board.awayPenaltySeconds1}"/>
-                    <p:poll interval="1" listener="#{hockeyController.hockeyScoreBoard.getAwayPenaltySeconds1}" update="awayPenaltySeconds1"/>
                     <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneAwayPenaltySeconds1(board.awayPenaltySeconds1)}">
                         <f:ajax event="click" render="awayPenaltySeconds1"/>
                     </h:commandButton>
@@ -132,9 +128,12 @@
             </h:dataTable>
             <br/>
 
-            <h:commandButton id="ss" value="#{hockeyController.ss}" styleClass="btn btn-danger" action="#{hockeyController.forwardTime}">
+            <h:commandButton id="ss" value="#{hockeyController.ss}" styleClass="btn btn-danger" action="#{hockeyController.start}">
                 <f:ajax event="click" render="ss"/>
             </h:commandButton>
+
+
+            <p:poll interval="1" listener="#{hockeyController.getHockeyScoreBoard}" update="adminForm"/>
         </h:form>
 
 

@@ -5,11 +5,14 @@ import lombok.Setter;
 import ru.geekbrains.persist.HockeyScoreBoard;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -28,11 +31,18 @@ public class HockeyController implements Serializable {
     @Setter
     String ss = "Start";
 
-    Long oldTime, newTime;
+    @Getter
+    @Setter
+    private String selectedOption;
 
     @Getter
     @Setter
-    boolean countdown = true;
+//    List<String> times = new ArrayList(Arrays.asList("20", "15", "10", "00"));
+    List<String> times = new ArrayList(Arrays.asList("20:00", "15:00", "10:00", "00:00"));
+
+    @Getter
+    @Setter
+    boolean countdown = false;
 
 
     public String createBoard() {
@@ -78,8 +88,14 @@ public class HockeyController implements Serializable {
 
 //  HOME ---------------------------------
     @Transactional
-    public void plusOneHomeScore(int i) {
-        hockeyScoreBoard.setHomeScore(i+1);
+    public void plusOneHomeScore(ActionEvent event) {
+        if (event.getComponent().getId().equals("hh"))
+            hockeyScoreBoard.setHomeScore(hockeyScoreBoard.getHomeScore() + 1);
+        else if (event.getComponent().getId().equals("htt"))
+            hockeyScoreBoard.setHomeScore(hockeyScoreBoard.getHomeScore() + 5);
+
+
+//        hockeyScoreBoard.setHomeScore(hockeyScoreBoard.getHomeScore() + 1);
         saveOrUpdateBoard();
     }
 
@@ -102,9 +118,8 @@ public class HockeyController implements Serializable {
     }
 
     @Transactional
-    public void plusOneHomePenaltySeconds1(int i, String s) {
+    public void plusOneHomePenaltySeconds1(int i) {
         hockeyScoreBoard.setHomePenaltySeconds1(i+1);
-//        hockeyScoreBoard.setHomePenaltyNumber1(s);
         saveOrUpdateBoard();
     }
 
@@ -192,12 +207,12 @@ public class HockeyController implements Serializable {
             try {
                 Thread.sleep(1000);
                 hockeyScoreBoard.setSeconds(hockeyScoreBoard.getSeconds() + 1);
+                checkPenaltyTime();
 
                 if (hockeyScoreBoard.getSeconds() == 60) {
                     hockeyScoreBoard.setMinutes(hockeyScoreBoard.getMinutes() + 1);
                     hockeyScoreBoard.setSeconds(0);
                 }
-                checkPenaltyTime();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -209,36 +224,46 @@ public class HockeyController implements Serializable {
             try {
                 Thread.sleep(1000);
                 hockeyScoreBoard.setSeconds(hockeyScoreBoard.getSeconds() - 1);
-
-                if (hockeyScoreBoard.getSeconds() == 60) {
-                    hockeyScoreBoard.setMinutes(hockeyScoreBoard.getMinutes() - 1);
-                    hockeyScoreBoard.setSeconds(0);
-                }
                 checkPenaltyTime();
+
+                if (hockeyScoreBoard.getSeconds() == 0) {
+                    hockeyScoreBoard.setMinutes(hockeyScoreBoard.getMinutes() - 1);
+                    hockeyScoreBoard.setSeconds(59);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     });
 
-    @Transactional
     public void checkPenaltyTime(){
-        if (hockeyScoreBoard.getHomePenaltyNumber1() != null){
-            hockeyScoreBoard.setHomePenaltySeconds1(hockeyScoreBoard.getHomePenaltySeconds1() - 1);
+//        if (hockeyScoreBoard.getHomePenaltyNumber1() != null){
+//            hockeyScoreBoard.setHomePenaltySeconds1(hockeyScoreBoard.getHomePenaltySeconds1() - 1);
+//
+//            if (hockeyScoreBoard.getHomePenaltyMinutes1() > 0 && hockeyScoreBoard.getHomePenaltySeconds1() == 0) {
+//                hockeyScoreBoard.setHomePenaltyMinutes1(hockeyScoreBoard.getHomePenaltyMinutes1() - 1);
+//                hockeyScoreBoard.setHomePenaltySeconds1(59);
+//            } else if (hockeyScoreBoard.getHomePenaltyMinutes1() == 0 && hockeyScoreBoard.getHomePenaltySeconds1() == 0){
+//                hockeyScoreBoard.setHomePenaltyNumber1(null);
+//            }
+//        }
 
-            if (hockeyScoreBoard.getHomePenaltySeconds1() == 0 && hockeyScoreBoard.getHomePenaltyMinutes1() > 0) {
+
+
+            if (hockeyScoreBoard.getHomePenaltySeconds1() == 0 && hockeyScoreBoard.getHomePenaltyNumber1() != null) {
                 hockeyScoreBoard.setHomePenaltyMinutes1(hockeyScoreBoard.getHomePenaltyMinutes1() - 1);
                 hockeyScoreBoard.setHomePenaltySeconds1(59);
+            } else {
+                hockeyScoreBoard.setHomePenaltySeconds1(hockeyScoreBoard.getHomePenaltySeconds1() - 1);
             }
-            else if (hockeyScoreBoard.getHomePenaltySeconds1() == 0 && hockeyScoreBoard.getHomePenaltyMinutes1() == 0){
-                hockeyScoreBoard.setHomePenaltyNumber1(null);
-                saveOrUpdateBoard();
-            }
+
+        if (hockeyScoreBoard.getHomePenaltyMinutes1() == 0 && hockeyScoreBoard.getHomePenaltySeconds1() == 0) {
+            hockeyScoreBoard.setHomePenaltyNumber1(null);
         }
     }
 
     @Transactional
-    public void forwardTime() {
+    public void start() {
         if (ss.equals("Start")) {
             ss = "Stop";
             saveOrUpdateBoard();
@@ -257,6 +282,7 @@ public class HockeyController implements Serializable {
         } else if (ss.equals("Stop")){
             ss = "Start";
             saveOrUpdateBoard();
+
             if (countdown) countdownThread.suspend();
             else forwardThread.suspend();
         }

@@ -24,21 +24,19 @@
                     <li class="nav-item">
                         <h:outputLink value="my_boards.xhtml" styleClass="nav-link">My boards</h:outputLink>
                     </li>
-                    <li class="nav-item">
-                        <h:outputLink value="hockey_form.xhtml" styleClass="nav-link">Create board</h:outputLink>
-                    </li>
                 </ul>
             </div>
         </nav>
 
         <h:form>
             <h:inputText value="#{hockeyController.hockeyScoreBoard.homeName}" a:placeholder="Home"/>
-            <label>Time</label>
-            <h:inputText value="#{hockeyController.hockeyScoreBoard.awayName}" a:placeholder="Away"/>
-            <br/>
 
-            <h:inputText p:type="number" style="margin-left: 140px" size="1" maxlength="2" value="#{hockeyController.hockeyScoreBoard.minutes}"/> :
-            <h:inputText p:type="number" size="1" maxlength="2" value="#{hockeyController.hockeyScoreBoard.seconds}"/>
+            <label>Time</label>
+            <p:selectOneMenu value="#{hockeyController.selectedOption}" dynamic="true">
+                <f:selectItems value="#{hockeyController.times}"/>
+            </p:selectOneMenu>
+
+            <h:inputText value="#{hockeyController.hockeyScoreBoard.awayName}" a:placeholder="Away"/>
             <br/>
 
             <h:inputText value="#{hockeyController.hockeyScoreBoard.description}" a:placeholder="Scoreboard name"/>
