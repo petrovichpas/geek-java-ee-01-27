@@ -1,9 +1,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta charset="utf-8"/>
@@ -30,15 +29,16 @@
 
         <h:form>
             <h:inputText value="#{hockeyController.hockeyScoreBoard.homeName}" a:placeholder="Home"/>
-
-            <label>Time</label>
-            <p:selectOneMenu value="#{hockeyController.selectedOption}" dynamic="true">
-                <f:selectItems value="#{hockeyController.times}"/>
-            </p:selectOneMenu>
-
+            <label>Set time start</label>
             <h:inputText value="#{hockeyController.hockeyScoreBoard.awayName}" a:placeholder="Away"/>
             <br/>
 
+            <p:selectOneMenu value="#{hockeyController.hockeyScoreBoard.minutes}" dynamic="true">
+                <f:selectItems value="#{hockeyController.times}"/>
+            </p:selectOneMenu>
+            <h:outputLabel style="font-size: xxx-large" value="#{hockeyController.hockeyScoreBoard.seconds == 0 ? ':00' : hockeyController.hockeyScoreBoard.seconds}"/>
+
+            <br/>
             <h:inputText value="#{hockeyController.hockeyScoreBoard.description}" a:placeholder="Scoreboard name"/>
             <br/>
 

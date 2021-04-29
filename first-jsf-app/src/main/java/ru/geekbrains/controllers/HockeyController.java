@@ -33,12 +33,8 @@ public class HockeyController implements Serializable {
 
     @Getter
     @Setter
-    private String selectedOption;
-
-    @Getter
-    @Setter
-//    List<String> times = new ArrayList(Arrays.asList("20", "15", "10", "00"));
-    List<String> times = new ArrayList(Arrays.asList("20:00", "15:00", "10:00", "00:00"));
+    List<Integer> times = new ArrayList(Arrays.asList(20, 15, 10, 0));
+//    List<String> times = new ArrayList(Arrays.asList("20:00", "15:00", "10:00", "00:00"));
 
     @Getter
     @Setter
@@ -86,119 +82,85 @@ public class HockeyController implements Serializable {
         return entityManager.createQuery("SELECT h FROM HockeyScoreBoard h", HockeyScoreBoard.class).getResultList();
     }
 
-//  HOME ---------------------------------
     @Transactional
-    public void plusOneHomeScore(ActionEvent event) {
-        if (event.getComponent().getId().equals("hh"))
-            hockeyScoreBoard.setHomeScore(hockeyScoreBoard.getHomeScore() + 1);
-        else if (event.getComponent().getId().equals("htt"))
-            hockeyScoreBoard.setHomeScore(hockeyScoreBoard.getHomeScore() + 5);
-
-
-//        hockeyScoreBoard.setHomeScore(hockeyScoreBoard.getHomeScore() + 1);
+    public void plusOne(ActionEvent event) {
+        switch (event.getComponent().getId()){
+            case "homeScore--1": hockeyScoreBoard.setHomeScore(hockeyScoreBoard.getHomeScore() + 1);
+                break;
+            case "awayScore--1": hockeyScoreBoard.setAwayScore(hockeyScoreBoard.getAwayScore() + 1);
+                break;
+            case "minutes--1": hockeyScoreBoard.setMinutes(hockeyScoreBoard.getMinutes() + 1);
+                break;
+            case "seconds--1": hockeyScoreBoard.setSeconds(hockeyScoreBoard.getSeconds() + 1);
+                break;
+            case "period--1": hockeyScoreBoard.setPeriod(hockeyScoreBoard.getPeriod() + 1);
+                break;
+            case "homePenaltyMinutes1--1": hockeyScoreBoard.setHomePenaltyMinutes1(hockeyScoreBoard.getHomePenaltyMinutes1() + 1);
+                break;
+            case "homePenaltyMinutes2--1": hockeyScoreBoard.setHomePenaltyMinutes2(hockeyScoreBoard.getHomePenaltyMinutes2() + 1);
+                break;
+            case "homePenaltyMinutes3--1": hockeyScoreBoard.setHomePenaltyMinutes3(hockeyScoreBoard.getHomePenaltyMinutes3() + 1);
+                break;
+            case "homePenaltySeconds1--1": hockeyScoreBoard.setHomePenaltySeconds1(hockeyScoreBoard.getHomePenaltySeconds1() + 1);
+                break;
+            case "homePenaltySeconds2--1": hockeyScoreBoard.setHomePenaltySeconds2(hockeyScoreBoard.getHomePenaltySeconds2() + 1);
+                break;
+            case "homePenaltySeconds3--1": hockeyScoreBoard.setHomePenaltySeconds3(hockeyScoreBoard.getHomePenaltySeconds3() + 1);
+                break;
+            case "awayPenaltyMinutes1--1": hockeyScoreBoard.setAwayPenaltyMinutes1(hockeyScoreBoard.getAwayPenaltyMinutes1() + 1);
+                break;
+            case "awayPenaltyMinutes2--1": hockeyScoreBoard.setAwayPenaltyMinutes2(hockeyScoreBoard.getAwayPenaltyMinutes2() + 1);
+                break;
+            case "awayPenaltyMinutes3--1": hockeyScoreBoard.setAwayPenaltyMinutes3(hockeyScoreBoard.getAwayPenaltyMinutes3() + 1);
+                break;
+            case "awayPenaltySeconds1--1": hockeyScoreBoard.setAwayPenaltySeconds1(hockeyScoreBoard.getAwayPenaltySeconds1() + 1);
+                break;
+            case "awayPenaltySeconds2--1": hockeyScoreBoard.setAwayPenaltySeconds2(hockeyScoreBoard.getAwayPenaltySeconds2() + 1);
+                break;
+            case "awayPenaltySeconds3--1": hockeyScoreBoard.setAwayPenaltySeconds3(hockeyScoreBoard.getAwayPenaltySeconds3() + 1);
+                break;
+        }
         saveOrUpdateBoard();
     }
 
     @Transactional
-    public void minusOneHomeScore(int i) {
-        hockeyScoreBoard.setHomeScore(i-1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void plusOneHomePenaltyMinutes1(int i) {
-        hockeyScoreBoard.setHomePenaltyMinutes1(i+1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void minusOneHomePenaltyMinutes1(int i) {
-        hockeyScoreBoard.setHomePenaltyMinutes1(i-1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void plusOneHomePenaltySeconds1(int i) {
-        hockeyScoreBoard.setHomePenaltySeconds1(i+1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void minusOneHomePenaltySeconds1(int i) {
-        hockeyScoreBoard.setHomePenaltySeconds1(i-1);
-        saveOrUpdateBoard();
-    }
-//  HOME END -------------------------------------------
-
-    @Transactional
-    public void plusOneAwayScore(int i) {
-        hockeyScoreBoard.setAwayScore(i+1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void minusOneAwayScore(int i) {
-        hockeyScoreBoard.setAwayScore(i-1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void plusOneAwayPenaltyMinutes1(int i) {
-        hockeyScoreBoard.setAwayPenaltyMinutes1(i+1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void minusOneAwayPenaltyMinutes1(int i) {
-        hockeyScoreBoard.setAwayPenaltyMinutes1(i-1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void plusOneAwayPenaltySeconds1(int i) {
-        hockeyScoreBoard.setAwayPenaltySeconds1(i+1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void minusOneAwayPenaltySeconds1(int i) {
-        hockeyScoreBoard.setAwayPenaltySeconds1(i-1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void plusOneMinute(int i) {
-        hockeyScoreBoard.setMinutes(i+1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void minusOneMinute(int i) {
-        hockeyScoreBoard.setMinutes(i-1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void plusOneSecond(int i) {
-        hockeyScoreBoard.setSeconds(i+1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void minusOneSecond(int i) {
-        hockeyScoreBoard.setSeconds(i-1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void plusOnePeriod(int i) {
-        hockeyScoreBoard.setPeriod(i+1);
-        saveOrUpdateBoard();
-    }
-
-    @Transactional
-    public void minusOnePeriod(int i) {
-        hockeyScoreBoard.setPeriod(i-1);
+    public void minusOne(ActionEvent event) {
+        switch (event.getComponent().getId()){
+            case "homeScore-1": hockeyScoreBoard.setHomeScore(hockeyScoreBoard.getHomeScore() - 1);
+                break;
+            case "awayScore-1": hockeyScoreBoard.setAwayScore(hockeyScoreBoard.getAwayScore() - 1);
+                break;
+            case "minutes-1": hockeyScoreBoard.setMinutes(hockeyScoreBoard.getMinutes() - 1);
+                break;
+            case "seconds-1": hockeyScoreBoard.setSeconds(hockeyScoreBoard.getSeconds() - 1);
+                break;
+            case "period-1": hockeyScoreBoard.setPeriod(hockeyScoreBoard.getPeriod() - 1);
+                break;
+            case "homePenaltyMinutes1-1": hockeyScoreBoard.setHomePenaltyMinutes1(hockeyScoreBoard.getHomePenaltyMinutes1() - 1);
+                break;
+            case "homePenaltyMinutes2-1": hockeyScoreBoard.setHomePenaltyMinutes2(hockeyScoreBoard.getHomePenaltyMinutes2() - 1);
+                break;
+            case "homePenaltyMinutes3-1": hockeyScoreBoard.setHomePenaltyMinutes3(hockeyScoreBoard.getHomePenaltyMinutes3() - 1);
+                break;
+            case "homePenaltySeconds1-1": hockeyScoreBoard.setHomePenaltySeconds1(hockeyScoreBoard.getHomePenaltySeconds1() - 1);
+                break;
+            case "homePenaltySeconds2-1": hockeyScoreBoard.setHomePenaltySeconds2(hockeyScoreBoard.getHomePenaltySeconds2() - 1);
+                break;
+            case "homePenaltySeconds3-1": hockeyScoreBoard.setHomePenaltySeconds3(hockeyScoreBoard.getHomePenaltySeconds3() - 1);
+                break;
+            case "awayPenaltyMinutes1-1": hockeyScoreBoard.setAwayPenaltyMinutes1(hockeyScoreBoard.getAwayPenaltyMinutes1() - 1);
+                break;
+            case "awayPenaltyMinutes2-1": hockeyScoreBoard.setAwayPenaltyMinutes2(hockeyScoreBoard.getAwayPenaltyMinutes2() - 1);
+                break;
+            case "awayPenaltyMinutes3-1": hockeyScoreBoard.setAwayPenaltyMinutes3(hockeyScoreBoard.getAwayPenaltyMinutes3() - 1);
+                break;
+            case "awayPenaltySeconds1-1": hockeyScoreBoard.setAwayPenaltySeconds1(hockeyScoreBoard.getAwayPenaltySeconds1() - 1);
+                break;
+            case "awayPenaltySeconds2-1": hockeyScoreBoard.setAwayPenaltySeconds2(hockeyScoreBoard.getAwayPenaltySeconds2() - 1);
+                break;
+            case "awayPenaltySeconds3-1": hockeyScoreBoard.setAwayPenaltySeconds3(hockeyScoreBoard.getAwayPenaltySeconds3() - 1);
+                break;
+        }
         saveOrUpdateBoard();
     }
 
@@ -237,29 +199,28 @@ public class HockeyController implements Serializable {
     });
 
     public void checkPenaltyTime(){
-//        if (hockeyScoreBoard.getHomePenaltyNumber1() != null){
-//            hockeyScoreBoard.setHomePenaltySeconds1(hockeyScoreBoard.getHomePenaltySeconds1() - 1);
-//
-//            if (hockeyScoreBoard.getHomePenaltyMinutes1() > 0 && hockeyScoreBoard.getHomePenaltySeconds1() == 0) {
-//                hockeyScoreBoard.setHomePenaltyMinutes1(hockeyScoreBoard.getHomePenaltyMinutes1() - 1);
-//                hockeyScoreBoard.setHomePenaltySeconds1(59);
-//            } else if (hockeyScoreBoard.getHomePenaltyMinutes1() == 0 && hockeyScoreBoard.getHomePenaltySeconds1() == 0){
-//                hockeyScoreBoard.setHomePenaltyNumber1(null);
-//            }
-//        }
+        if (!hockeyScoreBoard.getHomePenaltyNumber1().equals("")) {
+            hockeyScoreBoard.setHomePenaltySeconds1(hockeyScoreBoard.getHomePenaltySeconds1() - 1);
 
-
-
-            if (hockeyScoreBoard.getHomePenaltySeconds1() == 0 && hockeyScoreBoard.getHomePenaltyNumber1() != null) {
+            if (hockeyScoreBoard.getHomePenaltyMinutes1() > 0 && hockeyScoreBoard.getHomePenaltySeconds1() < 0) {
                 hockeyScoreBoard.setHomePenaltyMinutes1(hockeyScoreBoard.getHomePenaltyMinutes1() - 1);
                 hockeyScoreBoard.setHomePenaltySeconds1(59);
-            } else {
-                hockeyScoreBoard.setHomePenaltySeconds1(hockeyScoreBoard.getHomePenaltySeconds1() - 1);
+            } else if (hockeyScoreBoard.getHomePenaltyMinutes1() == 0 && hockeyScoreBoard.getHomePenaltySeconds1() <= 0){
+                hockeyScoreBoard.setHomePenaltyNumber1("");
             }
-
-        if (hockeyScoreBoard.getHomePenaltyMinutes1() == 0 && hockeyScoreBoard.getHomePenaltySeconds1() == 0) {
-            hockeyScoreBoard.setHomePenaltyNumber1(null);
         }
+
+
+//            if (hockeyScoreBoard.getHomePenaltySeconds1() == 0 && hockeyScoreBoard.getHomePenaltyNumber1() != null) {
+//                hockeyScoreBoard.setHomePenaltyMinutes1(hockeyScoreBoard.getHomePenaltyMinutes1() - 1);
+//                hockeyScoreBoard.setHomePenaltySeconds1(59);
+//            } else {
+//                hockeyScoreBoard.setHomePenaltySeconds1(hockeyScoreBoard.getHomePenaltySeconds1() - 1);
+//            }
+//
+//        if (hockeyScoreBoard.getHomePenaltyMinutes1() == 0 && hockeyScoreBoard.getHomePenaltySeconds1() == 0) {
+//            hockeyScoreBoard.setHomePenaltyNumber1(null);
+//        }
     }
 
     @Transactional

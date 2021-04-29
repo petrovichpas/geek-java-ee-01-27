@@ -31,102 +31,134 @@
 
 
         <h:form id="adminForm">
+            <h:panelGrid style="display: inline" columns="1">
+                <h:outputText value="#{hockeyController.hockeyScoreBoard.homeName}" />
+                <h:outputText value="#{hockeyController.hockeyScoreBoard.homeName}" />
+            </h:panelGrid>
+
+            <h:panelGrid style="display: inline" columns="1">
+                <h:outputText value="#{hockeyController.hockeyScoreBoard.homeName}" />
+                <h:outputText value="#{hockeyController.hockeyScoreBoard.homeName}" />
+            </h:panelGrid>
+
+
             <h:dataTable value="#{hockeyController.hockeyScoreBoard}" var="board" style="text-align: center">
                 <h:column>
                     <h:outputText value="#{board.homeName}" /><br/>
+
                     <h:outputText id="homeScore" style="font-weight: bold" value="#{board.homeScore}"/>
 
-                    <h:commandButton id="hh" value="+" actionListener="#{hockeyController.plusOneHomeScore}"/>
-                    <h:commandButton id="htt" value="-" actionListener="#{hockeyController.plusOneHomeScore}"/>
+                    <h:commandButton id="homeScore--1" value="+" actionListener="#{hockeyController.plusOne}">
+                        <f:ajax event="click" render="homeScore"/>
+                    </h:commandButton>
+
+                    <h:commandButton id="homeScore-1" value="-" actionListener="#{hockeyController.minusOne}">
+                        <f:ajax event="click" render="homeScore"/>
+                    </h:commandButton>
                     <br/>
 
                     <h:outputLabel value="Удаления"/><br/>
 
                     <h:inputText id="homePenaltyNumber1" maxlength="2" size="1" style="font-weight: bold" value="#{board.homePenaltyNumber1}"/>
-                    <h:outputText id="homePenaltyMinutes1" style="font-weight: bold" value="#{board.homePenaltyMinutes1}"/> :
-                    <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneHomePenaltyMinutes1(board.homePenaltyMinutes1)}">
+
+                    <h:outputText id="homePenaltyMinutes1" value="#{board.homePenaltyMinutes1}"/>
+
+                    <h:commandButton id="homePenaltyMinutes1--1" value="+" actionListener="#{hockeyController.plusOne}">
                         <f:ajax event="click" render="homePenaltyMinutes1"/>
                     </h:commandButton>
-                    <h:commandButton value="-" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.minusOneHomePenaltyMinutes1(board.homePenaltyMinutes1)}">
+
+                    <h:commandButton id="homePenaltyMinutes1-1" value="-" actionListener="#{hockeyController.minusOne}">
                         <f:ajax event="click" render="homePenaltyMinutes1"/>
                     </h:commandButton>
 
                     <h:outputText id="homePenaltySeconds1" style="font-weight: bold" value="#{board.homePenaltySeconds1}"/>
-                    <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneHomePenaltySeconds1(board.homePenaltySeconds1)}">
+
+                    <h:commandButton id="homePenaltySeconds1--1" value="+" actionListener="#{hockeyController.plusOne}">
                         <f:ajax event="click" render="homePenaltySeconds1"/>
                     </h:commandButton>
-                    <h:commandButton value="-" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.minusOneHomePenaltySeconds1(board.homePenaltySeconds1)}">
+
+                    <h:commandButton id="homePenaltySeconds1-1" value="-" actionListener="#{hockeyController.minusOne}">
                         <f:ajax event="click" render="homePenaltySeconds1"/>
                     </h:commandButton>
                     <br/>
 
-                    <h:inputText maxlength="2" size="1" value="88" /> <h:inputText value="2:33" /><br/>
-                    <h:inputText maxlength="2" size="1" value="88" /> <h:inputText value="2:33" />
                 </h:column>
 
                 <h:column>
-                    <p:selectBooleanCheckbox value="#{hockeyController.countdown}" itemLabel="Countdown"/><br/>
                     <h:outputLabel value="Time"/> <br/>
-                    <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneMinute(board.minutes)}">
-                        <f:ajax event="click" render="score1"/>
-                    </h:commandButton>
-                    <h:commandButton value="-" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.minusOneMinute(board.minutes)}">
-                        <f:ajax event="click" render="score1"/>
-                    </h:commandButton>
-                    <h:outputText id="time" style="font-weight: bold" value="#{hockeyController.hockeyScoreBoard.minutes}:#{hockeyController.hockeyScoreBoard.seconds}"/>
-                    <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneSecond(board.seconds)}">
-                        <f:ajax event="click" render="score1"/>
-                    </h:commandButton>
-                    <h:commandButton value="-" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.minusOneSecond(board.seconds)}">
-                        <f:ajax event="click" render="score1"/>
+
+                    <h:commandButton id="minutes--1" value="+" actionListener="#{hockeyController.plusOne}">
+                        <f:ajax event="click" render="time"/>
                     </h:commandButton>
 
+                    <h:commandButton id="minutes-1" value="-" actionListener="#{hockeyController.minusOne}">
+                        <f:ajax event="click" render="time"/>
+                    </h:commandButton>
+
+                    <h:outputText id="time" value="#{board.minutes}:#{board.seconds}"/>
+
+                    <h:commandButton id="seconds--1" value="+" actionListener="#{hockeyController.plusOne}">
+                        <f:ajax event="click" render="time"/>
+                    </h:commandButton>
+
+                    <h:commandButton id="seconds-1" value="-" actionListener="#{hockeyController.minusOne}">
+                        <f:ajax event="click" render="time"/>
+                    </h:commandButton><br/>
+
                     <h:outputLabel value="Период"/><br/>
-                    <h:outputLabel id="period" value="#{board.period}" style="font-weight: bold"/>
-                    <h:commandButton value="+" styleClass="btn btn-warning" action="#{hockeyController.plusOnePeriod(board.period)}">
+
+                    <h:outputLabel id="period" value="#{board.period}"/>
+
+                    <h:commandButton id="period--1" value="+" actionListener="#{hockeyController.plusOne}">
                         <f:ajax event="click" render="period"/>
                     </h:commandButton>
-                    <h:commandButton value="-" styleClass="btn btn-warning" action="#{hockeyController.minusOnePeriod(board.period)}">
+
+                    <h:commandButton id="period-1" value="-" actionListener="#{hockeyController.minusOne}">
                         <f:ajax event="click" render="period"/>
                     </h:commandButton>
-                    <br/>
-                    <br/>
                 </h:column>
 
                 <h:column>
                     <h:outputText value="#{board.awayName}" /><br/>
+
                     <h:outputText id="awayScore" style="font-weight: bold" value="#{board.awayScore}"/>
-                    <h:commandButton value="+" styleClass="btn btn-outline-warning btn-sm" action="#{hockeyController.plusOneAwayScore(board.awayScore)}">
+
+                    <h:commandButton id="awayScore--1" value="+" actionListener="#{hockeyController.plusOne}">
                         <f:ajax event="click" render="awayScore"/>
                     </h:commandButton>
-                    <h:commandButton value="-" styleClass="btn btn-outline-warning btn-sm" action="#{hockeyController.minusOneAwayScore(board.awayScore)}">
+
+                    <h:commandButton id="awayScore-1" value="-" actionListener="#{hockeyController.minusOne}">
                         <f:ajax event="click" render="awayScore"/>
                     </h:commandButton><br/>
 
                     <h:outputLabel value="Удаления"/><br/>
-                    <h:inputText id="awayPenaltyNumber1" maxlength="2" size="1" style="font-weight: bold"/>
-                    <h:outputText id="awayPenaltyMinutes1" style="font-weight: bold" value="#{board.awayPenaltyMinutes1}"/> :
-                    <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneAwayPenaltyMinutes1(board.awayPenaltyMinutes1)}">
+
+                    <h:inputText id="awayPenaltyNumber1" maxlength="2" size="1"/>
+
+                    <h:outputText id="awayPenaltyMinutes1" value="#{board.awayPenaltyMinutes1}"/>
+
+                    <h:commandButton id="awayPenaltyMinutes1--1" value="+" actionListener="#{hockeyController.plusOne}">
                         <f:ajax event="click" render="awayPenaltyMinutes1"/>
                     </h:commandButton>
-                    <h:commandButton value="-" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.minusOneAwayPenaltyMinutes1(board.awayPenaltyMinutes1)}">
+
+                    <h:commandButton id="awayPenaltyMinutes1-1" value="-" actionListener="#{hockeyController.minusOne}">
                         <f:ajax event="click" render="awayPenaltyMinutes1"/>
                     </h:commandButton>
 
                     <h:outputText id="awayPenaltySeconds1" style="font-weight: bold" value="#{board.awayPenaltySeconds1}"/>
-                    <h:commandButton value="+" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.plusOneAwayPenaltySeconds1(board.awayPenaltySeconds1)}">
-                        <f:ajax event="click" render="awayPenaltySeconds1"/>
-                    </h:commandButton>
-                    <h:commandButton value="-" styleClass="btn btn-outline-primary btn-sm" action="#{hockeyController.minusOneAwayPenaltySeconds1(board.awayPenaltySeconds1)}">
-                        <f:ajax event="click" render="awayPenaltySeconds1"/>
-                    </h:commandButton>
-                    <br/>
 
-                    <h:inputText maxlength="2" size="1" value="88" /> <h:inputText value="2:33" /><br/>
-                    <h:inputText maxlength="2" size="1" value="88" /> <h:inputText value="2:33" /><br/>
+                    <h:commandButton id="awayPenaltySeconds1--1" value="+" actionListener="#{hockeyController.plusOne}">
+                        <f:ajax event="click" render="awayPenaltySeconds1"/>
+                    </h:commandButton>
+
+                    <h:commandButton id="awayPenaltySeconds1-1" value="-" actionListener="#{hockeyController.minusOne}">
+                        <f:ajax event="click" render="awayPenaltySeconds1"/>
+                    </h:commandButton>
                 </h:column>
             </h:dataTable>
             <br/>
+
+            <p:selectBooleanCheckbox value="#{hockeyController.countdown}" itemLabel="Countdown"/><br/>
 
             <h:commandButton id="ss" value="#{hockeyController.ss}" styleClass="btn btn-danger" action="#{hockeyController.start}">
                 <f:ajax event="click" render="ss"/>
