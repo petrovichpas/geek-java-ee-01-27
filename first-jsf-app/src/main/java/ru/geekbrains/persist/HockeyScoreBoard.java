@@ -25,7 +25,7 @@ public class HockeyScoreBoard {
     private int period;
 
 //  ----------homePenalty---------------
-    @Column(length = 2)
+    @Column
     private String homePenaltyNumber1;
     private String homePenaltyNumber2;
     private String homePenaltyNumber3;
@@ -41,7 +41,7 @@ public class HockeyScoreBoard {
     private int homePenaltySeconds3;
 
 //  ----------awayPenalty---------------
-    @Column(length = 2)
+    @Column
     private String awayPenaltyNumber1;
     private String awayPenaltyNumber2;
     private String awayPenaltyNumber3;

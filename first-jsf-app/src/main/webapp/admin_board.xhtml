@@ -59,7 +59,7 @@
 
                     <h:outputLabel value="Удаления"/><br/>
 
-                    <h:inputText id="homePenaltyNumber1" maxlength="2" size="1" style="font-weight: bold" value="#{board.homePenaltyNumber1}"/>
+                    <h:inputText id="homePenaltyNumber1" maxlength="2" size="1" value="#{board.homePenaltyNumber1}"/>
 
                     <h:outputText id="homePenaltyMinutes1" value="#{board.homePenaltyMinutes1}"/>
 
@@ -85,7 +85,7 @@
                 </h:column>
 
                 <h:column>
-                    <h:outputLabel value="Time"/> <br/>
+                    <h:outputLabel value="Time"/><br/>
 
                     <h:commandButton id="minutes--1" value="+" actionListener="#{hockeyController.plusOne}">
                         <f:ajax event="click" render="time"/>
@@ -133,7 +133,7 @@
 
                     <h:outputLabel value="Удаления"/><br/>
 
-                    <h:inputText id="awayPenaltyNumber1" maxlength="2" size="1"/>
+                    <h:inputText id="awayPenaltyNumber1" maxlength="2" size="1" value="#{hockeyController.hockeyScoreBoard.awayPenaltyNumber1}"/>
 
                     <h:outputText id="awayPenaltyMinutes1" value="#{board.awayPenaltyMinutes1}"/>
 
